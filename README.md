@@ -43,7 +43,7 @@ flowchart LR
         C -->|vectorise| T[TF-IDF retriever<br/>top-3 chunks]
     end
     T -->|context| P
-    P --> G[Gemini API<br/>gemini-2.5-flash]
+    P --> G[Gemini API<br/>gemini-3.6-flash]
     H -->|multi-turn| G
     G --> R[Streamed response]
     R --> D{G-code block<br/>detector}
@@ -81,7 +81,7 @@ mechbot/
 
 - Python 3.10+
 - Streamlit (`st.chat_input`, `st.chat_message`, `st.write_stream`)
-- Google Gemini via the official `google-genai` SDK, model `gemini-2.5-flash`
+- Google Gemini via the official `google-genai` SDK, model `gemini-3.6-flash`
 - matplotlib (toolpath plots, architecture diagram)
 - scikit-learn `TfidfVectorizer` + pypdf (notes retrieval)
 - pytest

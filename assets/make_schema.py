@@ -27,7 +27,7 @@ NODES = {
     "notes":   (1.2, 2.4, "Uploaded notes\n(PDF / TXT)", DATA),
     "chunks":  (3.9, 2.4, "Text chunks", DATA),
     "tfidf":   (6.6, 2.4, "TF-IDF retriever\n(top-3 chunks)", LOGIC),
-    "gemini":  (13.4, 5.0, "Gemini API\n(gemini-2.5-flash)", AI),
+    "gemini":  (13.4, 5.0, "Gemini API\n(gemini-3.6-flash)", AI),
     "resp":    (16.3, 7.5, "Streamed\nresponse", OUT),
     "detect":  (16.3, 5.0, "G-code block\ndetector", OUT),
     "plot":    (16.3, 2.4, "matplotlib\ntoolpath plot\n+ stats", OUT),
