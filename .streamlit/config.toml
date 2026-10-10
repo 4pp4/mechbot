@@ -1,0 +1,11 @@
+# Clean "engineering drawing" theme: steel blue accents on a light grey background.
+[theme]
+base = "light"
+primaryColor = "#0B5394"
+backgroundColor = "#F7F9FB"
+secondaryBackgroundColor = "#E8EEF4"
+textColor = "#1B2631"
+font = "sans serif"
+
+[server]
+maxUploadSize = 20  # MB, for notes uploads

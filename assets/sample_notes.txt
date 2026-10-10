@@ -1,0 +1,32 @@
+MECHBOT SAMPLE NOTES - upload this file in the sidebar to test the "Sources used" feature.
+
+UNIT 1: THERMODYNAMICS - CARNOT CYCLE
+The Carnot cycle is a reversible cycle made of four processes: isothermal heat addition at the
+source temperature T_H, reversible adiabatic (isentropic) expansion, isothermal heat rejection at
+the sink temperature T_L, and reversible adiabatic compression. Its efficiency depends only on the
+two reservoir temperatures: eta = 1 - T_L / T_H, with temperatures in kelvin. Example: a Carnot
+engine working between 527 C (800 K) and 27 C (300 K) has efficiency 1 - 300/800 = 62.5 percent.
+No real engine operating between the same two temperatures can be more efficient (Carnot theorem).
+Common mistake: using degrees Celsius instead of kelvin in the efficiency formula.
+
+UNIT 2: STRENGTH OF MATERIALS - STRESS AND STRAIN
+Normal stress sigma = P / A, measured in pascal (N/m^2), usually quoted in MPa. Normal strain
+epsilon = change in length / original length and is dimensionless. Within the elastic limit Hooke's
+law holds: sigma = E * epsilon, where E is Young's modulus (about 200 GPa for structural steel and
+70 GPa for aluminium). Poisson's ratio nu = - lateral strain / longitudinal strain, about 0.3 for
+steel. Factor of safety = yield (or ultimate) stress / working stress. For a simply supported beam
+with a central point load W over span L, the maximum bending moment is W L / 4 at mid-span, and the
+bending stress is given by the flexure formula sigma = M y / I.
+
+UNIT 3: CNC MACHINING BASICS
+A CNC part program is written in G-codes (preparatory functions) and M-codes (miscellaneous
+functions). G00 is rapid positioning and must never be used to move into the material. G01 is
+linear interpolation at the programmed feed rate F (mm/min). G02 is clockwise circular
+interpolation and G03 counter-clockwise; the arc centre is given by I and J, which are incremental
+distances from the arc start point to the centre, or by the radius R. G21 selects metric units and
+G90 absolute programming, while G91 selects incremental programming. M03 starts the spindle
+clockwise at speed S (rpm), M05 stops it, M06 performs a tool change, M08 turns coolant on and M09
+turns it off. M30 ends the program and rewinds. A safe program always retracts the tool to a
+clearance height in Z before making rapid moves in X and Y.
+Cutting speed V = pi * D * N / 1000 (m/min), where D is the cutter diameter in mm and N the spindle
+speed in rpm. Feed rate F = f_z * z * N, where f_z is feed per tooth and z the number of teeth.

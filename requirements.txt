@@ -1,0 +1,6 @@
+streamlit>=1.46
+google-genai>=1.0
+matplotlib>=3.8
+pypdf>=4.0
+scikit-learn>=1.3
+pytest>=8.0
