@@ -69,16 +69,32 @@ for key, value in defaults.items():
 # Helper functions
 # ---------------------------------------------------------------------------
 
-def get_api_key() -> str:
-    """Read the Gemini key from Streamlit secrets (or an env variable as a fallback)."""
+def get_api_key() -> tuple[str, str]:
+    """Read the Gemini key from Streamlit secrets (or an env variable as a fallback).
+
+    Returns (key, problem). If no usable key is found, key is "" and problem
+    explains why, so the user knows what to fix. Secret VALUES are never shown.
+    """
+    key, problem = "", ""
     try:
-        key = st.secrets.get("GEMINI_API_KEY", "")
-    except Exception:  # no secrets.toml at all
-        key = ""
-    key = key or os.environ.get("GEMINI_API_KEY", "")
-    if key.strip().lower().startswith("your-"):  # placeholder from the example file
-        return ""
-    return key.strip()
+        secrets = dict(st.secrets)
+        key = str(secrets.get("GEMINI_API_KEY", ""))
+        if not key:
+            # Also accept the key placed under a [section] by mistake.
+            for value in secrets.values():
+                if hasattr(value, "get") and value.get("GEMINI_API_KEY"):
+                    key = str(value["GEMINI_API_KEY"])
+                    break
+        if not key:
+            names = ", ".join(f"`{n}`" for n in secrets) or "none"
+            problem = f"Secrets loaded, but no `GEMINI_API_KEY` entry was found (secret names found: {names})."
+    except Exception as exc:  # no secrets file, or invalid TOML
+        problem = f"Secrets could not be loaded ({type(exc).__name__}). Check the TOML format: `GEMINI_API_KEY = \"...\"` with straight double quotes."
+
+    key = (key or os.environ.get("GEMINI_API_KEY", "")).strip()
+    if key.lower().startswith("your-"):  # placeholder from the example file
+        return "", "`GEMINI_API_KEY` still contains the placeholder text — replace it with your real key."
+    return key, ("" if key else problem)
 
 
 @st.cache_resource
@@ -256,12 +272,13 @@ if prompt:
     st.session_state.messages.append(user_msg)
     render_message(user_msg)
 
-    api_key = get_api_key()
+    api_key, key_problem = get_api_key()
     if not api_key:
         st.error(
             "🔑 No Gemini API key found. Create `.streamlit/secrets.toml` with "
             "`GEMINI_API_KEY = \"...\"` (see `secrets.toml.example`), or add it under "
-            "**Secrets** on Streamlit Community Cloud, then reload the page."
+            "**Secrets** on Streamlit Community Cloud, then reload the page.\n\n"
+            f"**Details:** {key_problem}"
         )
     else:
         # Optional RAG: find the most relevant chunks of the uploaded notes.
